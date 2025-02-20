@@ -7,8 +7,8 @@ export default function Home() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const initializeDeepAR = async () => {
-      if (canvasRef.current) {
+    if (typeof window !== 'undefined' && canvasRef.current) {
+      const initializeDeepAR = async () => {
         try {
           const deepAR = await deepar.initialize({
             licenseKey: '098c0d38bada8b5db7197325fa6f0ff5833227c5e4cc433e627c2d9e0651a8a5d017b403aa9efaaa',
@@ -16,7 +16,7 @@ export default function Home() {
             effect: '/filters/aviators',
             additionalOptions: {
               cameraConfig: {
-                facingMode: 'environment',
+                facingMode: 'environment', // Attempt to use the back camera
               }
             }
           });
@@ -32,10 +32,10 @@ export default function Home() {
         } catch (error) {
           console.error('Failed to initialize DeepAR:', error);
         }
-      }
-    };
+      };
 
-    initializeDeepAR();
+      initializeDeepAR();
+    }
   }, []);
 
   return (
