@@ -16,10 +16,19 @@ export default function Home() {
             effect: '/filters/aviators',
             additionalOptions: {
               cameraConfig: {
-                facingMode: 'environment',
+                facingMode: 'environment', // Attempt to use the back camera
               }
             }
           });
+
+          // Ensure the camera is available and handle any errors
+          const hasCameraAccess = await navigator.mediaDevices.getUserMedia({ video: true })
+            .then(() => true)
+            .catch(() => false);
+
+          if (!hasCameraAccess) {
+            console.error('Camera access is denied or unavailable.');
+          }
         } catch (error) {
           console.error('Failed to initialize DeepAR:', error);
         }
@@ -30,7 +39,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="items-center justify-items-center h-screen w-screen]">
+    <div className="items-center justify-items-center h-screen w-screen">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full h-full">
         <div id="testing" ref={canvasRef} className="w-full h-full">
           {/* Canvas content */}
