@@ -7,12 +7,12 @@ export default function Home() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && canvasRef.current) {
+    if (canvasRef.current) {
       const initializeDeepAR = async () => {
         try {
           const deepAR = await deepar.initialize({
             licenseKey: '098c0d38bada8b5db7197325fa6f0ff5833227c5e4cc433e627c2d9e0651a8a5d017b403aa9efaaa',
-            previewElement: canvasRef.current as HTMLElement,
+            previewElement: canvasRef.current as HTMLElement, // Type assertion to ensure it's not null
             effect: '/filters/aviators',
             additionalOptions: {
               cameraConfig: {
